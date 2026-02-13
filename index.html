@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Will You Be My Valentine's Bunny?</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #ff4d6d;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+        }
+
+        .yes {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        .yes:hover {
+            background: #ff1f4a;
+        }
+
+        .no {
+            background: #e0e0e0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Will you be my Valentine’s Bunny? 🐰💕</h1>
+        <button class="yes" onclick="yesClick()">Yes 💖</button>
+        <button class="no" onmouseover="moveButton()">No 😢</button>
+    </div>
+
+    <script>
+        const noButton = document.querySelector('.no');
+        const noMessages = [
+            "Are you really gonna say no to me? 😢",
+            "Please, Bunny 🐰",
+            "If you say no, I will be really sad 😭",
+            "Come on… say yes! 💖",
+            "Don't break my little bunny heart 💔"
+        ];
+
+        function yesClick() {
+            alert("Yay! 💘 You made my day, Bunny!");
+        }
+
+        function moveButton() {
+            // Move the button randomly
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 60);
+            noButton.style.left = x + "px";
+            noButton.style.top = y + "px";
+
+            // Change the button text randomly
+            const randomMessage = noMessages[Math.floor(Math.random() * noMessages.length)];
+            noButton.textContent = randomMessage;
+        }
+    </script>
+
+</body>
+</html>
