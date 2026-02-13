@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Will You Be My Valentine's Bunny?</title>
+    <title>Valentine’s Bunny</title>
     <style>
         body {
             height: 100vh;
@@ -12,19 +12,24 @@
             background: linear-gradient(135deg, #ff758c, #ff7eb3);
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
+            overflow: hidden;
+            position: relative;
         }
 
         .card {
             background: white;
-            padding: 40px;
+            padding: 50px;
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10;
+            position: relative;
         }
 
         h1 {
             color: #ff4d6d;
             margin-bottom: 30px;
+            font-size: 2rem;
         }
 
         button {
@@ -50,9 +55,50 @@
             background: #e0e0e0;
             position: absolute;
         }
+
+        /* Falling hearts */
+        .heart {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: -50px;
+            background: red;
+            transform: rotate(45deg);
+            animation: fall linear infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(45deg); opacity: 1;}
+            100% { transform: translateY(100vh) rotate(45deg); opacity: 0;}
+        }
     </style>
 </head>
 <body>
+
+    <!-- Background Music -->
+    <audio autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="card">
         <h1>Will you be my Valentine’s Bunny? 🐰💕</h1>
@@ -62,29 +108,56 @@
 
     <script>
         const noButton = document.querySelector('.no');
+
+        // Updated messages for No button
         const noMessages = [
-            "Are you really gonna say no to me? 😢",
+            "Are you really gonna say no to me, Bunny? 😢",
             "Please, Bunny 🐰",
-            "If you say no, I will be really sad 😭",
-            "Come on… say yes! 💖",
-            "Don't break my little bunny heart 💔"
+            "Come on, say yes now! 💖",
+            "Don't break my little heart 💔",
+            "If you say no, I will be really sad 😭"
         ];
 
+        // Disable Yes click until the No button has been hovered at least once
+        let hoveredNo = false;
+
         function yesClick() {
-            alert("Yay! 💘 You made my day, Bunny!");
+            if (!hoveredNo) {
+                alert("Hmm… try interacting with the No button first 😉");
+                return;
+            }
+            // Go to celebration page
+            window.location.href = "celebration.html";
         }
 
         function moveButton() {
-            // Move the button randomly
+            hoveredNo = true; // User interacted with No
+
+            // Move No button randomly
             const x = Math.random() * (window.innerWidth - 120);
             const y = Math.random() * (window.innerHeight - 60);
             noButton.style.left = x + "px";
             noButton.style.top = y + "px";
 
-            // Change the button text randomly
+            // Change No button text randomly
             const randomMessage = noMessages[Math.floor(Math.random() * noMessages.length)];
             noButton.textContent = randomMessage;
         }
+
+        // Generate falling hearts
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        setInterval(createHeart, 300);
     </script>
 
 </body>
